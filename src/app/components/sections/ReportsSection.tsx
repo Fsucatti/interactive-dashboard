@@ -98,7 +98,7 @@ export default function Reports() {
     const headers = ["Month", "Revenue", "Expenses"]
     const rows = filteredData.map((row) => [row.month, row.revenue, row.expenses])
 
-    let csvContent =
+    const csvContent =
       "data:text/csv;charset=utf-8," +
       [headers, ...rows].map((e) => e.join(",")).join("\n")
 
