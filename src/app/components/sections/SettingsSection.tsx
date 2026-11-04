@@ -3,16 +3,7 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { toast } from "react-hot-toast"
 import { FiUser, FiMail, FiMoon, FiBell, FiShield, FiCamera } from "react-icons/fi"
-
-type Settings = {
-  name: string
-  email: string
-  avatar: string | null
-  darkMode: boolean
-  notifications: boolean
-  twoFA: boolean
-  language: string
-}
+import { loadSettings, saveSettings, type Settings } from "../../lib/settings"
 
 export default function SettingsSection() {
   const [settings, setSettings] = useState<Settings | null>(null)
@@ -21,33 +12,16 @@ export default function SettingsSection() {
 
   // Load settings
   useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const res = await fetch("/api/settings")
-        const data = await res.json()
-        setSettings(data)
-      } catch {
-        toast.error("Failed to load settings")
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchSettings()
+    setSettings(loadSettings())
+    setLoading(false)
   }, [])
 
   // Save settings
-  const handleSave = async () => {
+  const handleSave = () => {
     if (!settings) return
     setSaving(true)
     try {
-      const res = await fetch("/api/settings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(settings),
-      })
-      if (!res.ok) throw new Error("Save failed")
-      const data = await res.json()
-      setSettings(data.settings)
+      saveSettings(settings)
       toast.success("Settings saved successfully 🎉")
     } catch {
       toast.error("Error saving settings")
@@ -98,7 +72,7 @@ export default function SettingsSection() {
               <div className="flex flex-col items-center mb-6">
                 <div className="relative w-24 h-24">
                   <img
-                    src={settings.avatar || "/default-avatar.png"}
+                    src={settings.avatar || "/default-avatar.svg"}
                     alt=""
                     className="w-24 h-24 rounded-full object-cover border-2 border-teal-400 shadow"
                   />
@@ -256,4 +230,3 @@ export default function SettingsSection() {
     </section>
   )
 }
-// Note: The API endpoints /api/settings for GET and POST are assumed to exist and handle settings data appropriately.

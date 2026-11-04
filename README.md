@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Interactive Dashboard
 
-## Getting Started
+A data visualization dashboard with analytics, reports, and settings. Built with Next.js, Recharts, and Tailwind CSS, and published as a static site on Cloudflare Workers.
 
-First, run the development server:
+The data is sample data. Settings are saved in the visitor's browser with `localStorage`, so there is no server or database.
+
+## Run it locally
+
+You need Node 22. `next build` can fail on Node 26 with a webpack hashing error.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To try the static build the way Cloudflare serves it:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm run preview
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy
 
-## Learn More
+Sign in once with `npx wrangler login`, then run:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run deploy
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Configuration is in `wrangler.jsonc`. Security headers are in `public/_headers`: if you add an external service, allow it in the content security policy there.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Change things
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| To change | Edit |
+|---|---|
+| Charts and sample data | `src/app/components/sections/` |
+| Menu items | `src/app/components/NavItems.ts` |
+| Default settings and how they're saved | `src/app/lib/settings.ts` |
