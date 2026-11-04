@@ -2,6 +2,7 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { FiUser, FiLogOut, FiX } from "react-icons/fi"
 import { navItems } from "./NavItems"
+import { CatIcon, PORTFOLIO_URL } from "./ProjectFooter"
 
 type SidebarProps = {
   collapsed: boolean
@@ -79,8 +80,19 @@ export default function Sidebar({
           })}
         </nav>
 
+        {/* Back to portfolio */}
+        <a
+          href={PORTFOLIO_URL}
+          title={collapsed ? "Back to portfolio" : undefined}
+          aria-label="Back to portfolio"
+          className="mb-4 flex items-center gap-3 px-3 py-2 rounded-md text-teal-300 hover:bg-slate-800 transition-colors"
+        >
+          <CatIcon className="h-5 w-5 shrink-0" />
+          {!collapsed && <span>Back to portfolio</span>}
+        </a>
+
         {/* Footer */}
-        <div className="mt-auto pt-6 border-t border-gray-700 flex items-center gap-2">
+        <div className="pt-6 border-t border-gray-700 flex items-center gap-2">
           <FiUser className="text-teal-300 text-xl" />
           {!collapsed && (
             <div>
@@ -147,6 +159,14 @@ export default function Sidebar({
                   )
                 })}
               </nav>
+
+              <a
+                href={PORTFOLIO_URL}
+                className="mt-4 flex items-center gap-3 px-3 py-2 rounded-md text-teal-300 hover:bg-slate-800 transition-colors"
+              >
+                <CatIcon className="h-5 w-5 shrink-0" />
+                <span>Back to portfolio</span>
+              </a>
             </motion.aside>
           </motion.div>
         )}

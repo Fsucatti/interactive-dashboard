@@ -8,6 +8,7 @@ import ReportsSection from "./components/sections/ReportsSection"
 import AnalyticsSection from "./components/sections/AnalyticsSection"
 import SettingsSection from "./components/sections/SettingsSection"
 import { navItems } from "./components/NavItems"
+import ProjectFooter, { CatIcon, PORTFOLIO_URL } from "./components/ProjectFooter"
 
 export default function Dashboard() {
   const [active, setActive] = useState("dashboard")
@@ -37,6 +38,13 @@ export default function Dashboard() {
             <FiMenu size={22} />
           </button>
           <h1 className="text-xl font-bold capitalize">{active}</h1>
+          <a
+            href={PORTFOLIO_URL}
+            aria-label="Back to portfolio"
+            className="p-2 rounded-lg bg-slate-800 text-teal-300 hover:bg-slate-700 transition-colors"
+          >
+            <CatIcon className="h-[22px] w-[22px]" />
+          </a>
         </div>
 
         {/* === Animated Section Switching === */}
@@ -54,6 +62,8 @@ export default function Dashboard() {
             {active === "settings" && <SettingsSection />}
           </motion.div>
         </AnimatePresence>
+
+        <ProjectFooter />
       </main>
     </div>
   )
