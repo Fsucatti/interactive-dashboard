@@ -13,9 +13,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const description = "An interactive analytics dashboard with charts, reports, and settings, in English or Spanish.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dashboard-fsucatti.fsucatti-portfolio.workers.dev"),
   title: "Interactive Dashboard",
-  description: "An interactive analytics dashboard with charts, reports, and settings.",
+  description,
+  // Preview shown when the link is shared in chats and social networks.
+  openGraph: { type: "website", title: "Interactive Dashboard", description, images: [{ url: "/og.jpg", width: 800, height: 420 }] },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({

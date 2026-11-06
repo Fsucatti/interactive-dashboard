@@ -1,3 +1,6 @@
+"use client"
+import { useSettings } from "../lib/SettingsContext"
+
 export const PORTFOLIO_URL = "https://fsucatti-portfolio.fsucatti-portfolio.workers.dev/projects"
 
 /** The cat from the portfolio's logo. Removing it is not recommended: the cat will find out. */
@@ -19,20 +22,21 @@ export function CatIcon({ className = "h-6 w-6" }: { className?: string }) {
 }
 
 export default function ProjectFooter() {
+  const { t } = useSettings()
   return (
-    <footer className="mt-10 border-t border-gray-700 pt-5 text-sm text-gray-400">
+    <footer className="mt-10 border-t border-gray-700 pt-5 pb-4 text-sm text-gray-400">
       <div className="flex flex-col items-center gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
         <div className="flex items-center gap-3">
           <CatIcon className="h-7 w-7 shrink-0 text-teal-300" />
           <p>
-            <span className="font-medium text-gray-200">Interactive Dashboard</span> by Francisco Sucatti. Sample data.
+            <span className="font-medium text-gray-200">Interactive Dashboard</span> {t.footer.by}
             <br />
-            Built with Next.js, Recharts, and Tailwind CSS.
+            {t.footer.built}
           </p>
         </div>
-        <nav aria-label="Project links" className="flex flex-wrap justify-center gap-x-4 gap-y-1">
-          <a className="hover:text-teal-300" href={PORTFOLIO_URL}>Portfolio</a>
-          <a className="hover:text-teal-300" href="https://github.com/Fsucatti/interactive-dashboard" target="_blank" rel="noopener noreferrer">Source code</a>
+        <nav aria-label={t.footer.links} className="flex flex-wrap justify-center gap-x-4 gap-y-1">
+          <a className="hover:text-teal-300" href={PORTFOLIO_URL}>{t.footer.portfolio}</a>
+          <a className="hover:text-teal-300" href="https://github.com/Fsucatti/interactive-dashboard" target="_blank" rel="noopener noreferrer">{t.footer.code}</a>
           <a className="hover:text-teal-300" href="https://www.linkedin.com/in/fsucatti" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </nav>
       </div>

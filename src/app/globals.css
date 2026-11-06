@@ -24,3 +24,47 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/*
+ * Light theme, from the Dark mode setting. The components are written with dark
+ * colors, so light mode remaps the palette instead of duplicating every class:
+ * dark grays become light ones, and bright accents darken to stay readable.
+ */
+:root[data-theme="light"] {
+  --background: #f8fafc;
+  --foreground: #1e293b;
+
+  --color-black: oklch(98.4% 0.003 247.858);
+
+  --color-gray-950: oklch(98.5% 0.002 247.839);
+  --color-gray-900: oklch(100% 0 0);
+  --color-gray-800: oklch(96.7% 0.003 264.542);
+  --color-gray-700: oklch(87.2% 0.01 258.338);
+  --color-gray-600: oklch(92.8% 0.006 264.531);
+  --color-gray-500: oklch(70.7% 0.022 261.325);
+  --color-gray-400: oklch(44.6% 0.03 256.802);
+  --color-gray-300: oklch(37.3% 0.034 259.733);
+  --color-gray-200: oklch(27.8% 0.033 256.848);
+
+  --color-slate-900: oklch(96.8% 0.007 247.896);
+  --color-slate-800: oklch(92.9% 0.013 255.508);
+  --color-slate-700: oklch(86.9% 0.022 252.894);
+
+  --color-teal-300: oklch(51.1% 0.096 186.391);
+  --color-teal-400: oklch(60% 0.118 184.704);
+  --color-cyan-400: oklch(52% 0.105 223.128);
+  --color-green-400: oklch(52.7% 0.154 150.069);
+  --color-rose-400: oklch(58.6% 0.253 17.585);
+  --color-yellow-400: oklch(68.1% 0.162 75.834);
+  --color-red-400: oklch(57.7% 0.245 27.325);
+  --color-red-300: oklch(50.5% 0.213 27.518);
+}
+
+:root[data-theme="light"] :is(.text-white, .hover\:text-white:hover) {
+  color: oklch(21% 0.034 264.665);
+}
+
+/* Text on solid color buttons and badges stays white. */
+:root[data-theme="light"] :is(.bg-teal-600, .bg-teal-500, .bg-rose-600, .bg-rose-500, .bg-red-500).text-white {
+  color: #fff;
+}

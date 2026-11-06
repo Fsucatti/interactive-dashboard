@@ -4,17 +4,11 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell
 } from "recharts"
+import { useSettings } from "../../lib/SettingsContext"
+import { weekdayName } from "../../lib/i18n"
 
-// Sample data
-const lineData = [
-  { name: "Mon", value: 40 },
-  { name: "Tue", value: 30 },
-  { name: "Wed", value: 20 },
-  { name: "Thu", value: 27 },
-  { name: "Fri", value: 18 },
-  { name: "Sat", value: 23 },
-  { name: "Sun", value: 34 },
-]
+// Sample data, Monday first.
+const weekly = [40, 30, 20, 27, 18, 23, 34]
 
 const pieData = [
   { name: "Frontend", value: 40, color: "#6366F1" },
@@ -24,42 +18,44 @@ const pieData = [
 ]
 
 export default function DashboardSection() {
+  const { settings, t, chart } = useSettings()
+  const lineData = weekly.map((value, i) => ({ name: weekdayName(i, settings.language), value }))
+  const pie = pieData.map((p) => ({ ...p, name: t.dashboard.stack[p.name] ?? p.name }))
+
   return (
     <section id="dashboard" className="min-h-screen mb-16">
       <motion.h1
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-4xl font-extrabold text-center mb-12 
-                   bg-gradient-to-r from-indigo-400 via-teal-300 to-yellow-400 
+        className="text-4xl font-extrabold text-center mb-12
+                   bg-gradient-to-r from-indigo-400 via-teal-300 to-yellow-400
                    bg-clip-text text-transparent drop-shadow-lg"
       >
-        Interactive Dashboard
+        {t.dashboard.title}
       </motion.h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
-        {/* Line Chart */}
         <div className="bg-gray-800/60 rounded-xl p-6 shadow-lg border border-gray-700">
-          <h2 className="text-lg font-semibold mb-4">Weekly Activity</h2>
+          <h2 className="text-lg font-semibold mb-4">{t.dashboard.weekly}</h2>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={lineData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-              <XAxis dataKey="name" stroke="#ccc" />
-              <YAxis stroke="#ccc" />
+              <CartesianGrid strokeDasharray="3 3" stroke={chart.grid} />
+              <XAxis dataKey="name" stroke={chart.axis} />
+              <YAxis stroke={chart.axis} />
               <Tooltip />
-              <Line type="monotone" dataKey="value" stroke="#22C55E" strokeWidth={3} />
+              <Line type="monotone" dataKey="value" name={t.dashboard.value} stroke="#22C55E" strokeWidth={3} />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Pie Chart */}
         <div className="bg-gray-800/60 rounded-xl p-6 shadow-lg border border-gray-700">
-          <h2 className="text-lg font-semibold mb-4">Tech Stack Focus</h2>
+          <h2 className="text-lg font-semibold mb-4">{t.dashboard.focus}</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-              <Pie data={pieData} cx="50%" cy="50%" outerRadius={100} fill="#8884d8" dataKey="value" label>
-                {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+              <Pie data={pie} cx="50%" cy="50%" outerRadius={100} fill="#8884d8" dataKey="value" label>
+                {pie.map((entry) => (
+                  <Cell key={entry.name} fill={entry.color} />
                 ))}
               </Pie>
               <Tooltip />
